@@ -1,0 +1,112 @@
+macros:
+#job 1
+    - &ubuntu-bionic
+      os: linux
+      dist: bionic
+      compiler:
+      - clang
+      - g++
+      addons:
+          apt:
+            sources:
+                - ubuntu-toolchain-r-test
+            packages:
+                - build-essential
+                - libboost-all-dev
+                - libssl-dev
+                - g++
+      before_install:
+          ./scripts/before_install.sh
+      install:
+          ./scripts/install.sh
+      before_script:
+          ./scripts/before_script.sh
+      script:
+          - ./scripts/script.sh
+          - travis_retry make --debug=v
+          - sha256sum dnsseed
+      after_script:
+          ./scripts/after_script.sh
+      after_success:
+          ./scripts/after_success.sh
+      after_failure:
+          ./scripts/after_failure.sh
+#job 2
+    - &ubuntu-xenial
+      os: linux
+      dist: xenial
+      compiler:
+      - clang
+      - g++
+      addons:
+          apt:
+            sources:
+                - ubuntu-toolchain-r-test
+            packages:
+                - build-essential
+                - libboost-all-dev
+                - libssl-dev
+                - g++
+      before_install:
+          ./scripts/before_install.sh
+      install:
+          ./scripts/install.sh
+      before_script:
+          ./scripts/before_script.sh
+      script:
+          - ./scripts/script.sh
+          - travis_retry make --debug=v
+          - sha256sum dnsseed
+      after_script:
+          ./scripts/after_script.sh
+      after_success:
+          ./scripts/after_success.sh
+      after_failure:
+          ./scripts/after_failure.sh
+#job 3
+    - &macos
+      os: osx
+      osx_image: xcode11
+      compiler:
+      - clang
+      - g++
+      addons:
+          homebrew:
+          packages:
+          - autoconf
+          - automake
+          - libtool
+          - pkg-config
+          - boost
+          - boost-build
+          - openssl
+          - gcc
+          update: false
+      env:
+      - LDFLAGS=-L/usr/local/opt/openssl@1.1/lib
+      - CPPFLAGS=-I/usr/local/opt/openssl@1.1/include
+      - PKG_CONFIG_PATH=/usr/local/opt/openssl@1.1/lib/pkgconfig
+      - PATH="/usr/local/opt/openssl/bin:$PATH"
+      before_install:
+          ./scripts/before_install.sh
+      install:
+          ./scripts/install.sh
+      before_script:
+          ./scripts/before_script.sh
+      script:
+          - ./scripts/script.sh
+          - travis_retry make --debug=v
+          - shasum dnsseed
+      after_script:
+          ./scripts/after_script.sh
+      after_success:
+          ./scripts/after_success.sh
+      after_failure:
+          ./scripts/after_failure.sh
+#
+language: cpp
+jobs:
+    include:
+        - <<: *ubuntu-bionic #job 1
+        - <<: *ubuntu-xenial #job 2
+        - <<: *macos         #job 3
