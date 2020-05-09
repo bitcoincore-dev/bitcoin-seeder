@@ -1,15 +1,17 @@
 #!/usr/bin/env bash
-echo "  ___   _  _    ___   _____    _    _      _     "
-echo " )_ _( ) \/ (  (  _( )__ __(  )_\  ) |    ) |    "
-echo " _| |_ |  \ |  _) \    | |   /( )\ | (__  | (__  "
-echo ")_____()_()_( )____)   )_(  )_/ \_()____( )____( "
+
+#sudo -v
+
+./scripts/before_install.sh
+make
+./scripts/install.sh
+
+screen -S 1 ./dnsseed -h seeder.bitcoincore.dev -n ns1.digitalocean.com. -m admin.bitcoincore.dev 2>/dev/null &
+
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
-if hash apt 2>/dev/null; then
-true
-fi
-true #checkbrew linuxbrew acting weird in travis-ci
+screen -S 2 /usr/sbin/./iftop
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-true
+screen -S 2 sudo /usr/local/sbin/./iftop
 elif [[ "$OSTYPE" == "cygwin" ]]; then
 echo TODO add support for $OSTYPE
 elif [[ "$OSTYPE" == "msys" ]]; then
@@ -21,3 +23,4 @@ echo TODO add support for $OSTYPE
 else
 echo TODO add support for $OSTYPE
 fi
+

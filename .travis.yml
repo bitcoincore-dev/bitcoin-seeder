@@ -6,6 +6,8 @@ macros:
       compiler:
       - clang
       - g++
+      env:
+      - BIONIC=true
       addons:
           apt:
             sources:
@@ -26,11 +28,11 @@ macros:
           - travis_retry make --debug=v
           - sha256sum dnsseed
       after_script:
-          ./scripts/after_script.sh
+          - ./scripts/after_script.sh
       after_success:
-          ./scripts/after_success.sh
+          - ./scripts/after_success.sh
       after_failure:
-          ./scripts/after_failure.sh
+          - ./scripts/after_failure.sh
 #job 2
     - &ubuntu-xenial
       os: linux
@@ -38,6 +40,8 @@ macros:
       compiler:
       - clang
       - g++
+      env:
+      - XENIAL=true
       addons:
           apt:
             sources:
@@ -48,21 +52,21 @@ macros:
                 - libssl-dev
                 - g++
       before_install:
-          ./scripts/before_install.sh
+          - ./scripts/before_install.sh
       install:
-          ./scripts/install.sh
+          - ./scripts/install.sh
       before_script:
-          ./scripts/before_script.sh
+          - ./scripts/before_script.sh
       script:
           - ./scripts/script.sh
           - travis_retry make --debug=v
           - sha256sum dnsseed
       after_script:
-          ./scripts/after_script.sh
+          - ./scripts/after_script.sh
       after_success:
-          ./scripts/after_success.sh
+          - ./scripts/after_success.sh
       after_failure:
-          ./scripts/after_failure.sh
+          - ./scripts/after_failure.sh
 #job 3
     - &macos
       os: osx
@@ -70,6 +74,11 @@ macros:
       compiler:
       - clang
       - g++
+      env:
+      - MACOS=true
+      - LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
+      - CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
+      - PKG_CONFIG_PATH="/usr/local/opt/openssl@1.1/lib/pkgconfig"
       addons:
           homebrew:
           packages:
@@ -79,30 +88,26 @@ macros:
           - pkg-config
           - boost
           - boost-build
-          - openssl
+          - openssl@1.1
           - gcc
           update: false
-      env:
-      - LDFLAGS=-L/usr/local/opt/openssl@1.1/lib
-      - CPPFLAGS=-I/usr/local/opt/openssl@1.1/include
-      - PKG_CONFIG_PATH=/usr/local/opt/openssl@1.1/lib/pkgconfig
-      - PATH="/usr/local/opt/openssl/bin:$PATH"
       before_install:
-          ./scripts/before_install.sh
+          - ./scripts/before_install.sh
       install:
-          ./scripts/install.sh
+          - ./scripts/install.sh
       before_script:
-          ./scripts/before_script.sh
+          - ./scripts/before_script.sh
       script:
           - ./scripts/script.sh
           - travis_retry make --debug=v
           - shasum dnsseed
+          #- ./dnsseed
       after_script:
-          ./scripts/after_script.sh
+          - ./scripts/after_script.sh
       after_success:
-          ./scripts/after_success.sh
+          - ./scripts/after_success.sh
       after_failure:
-          ./scripts/after_failure.sh
+          - ./scripts/after_failure.sh
 #
 language: cpp
 jobs:
