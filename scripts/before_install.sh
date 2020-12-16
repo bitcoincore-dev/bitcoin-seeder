@@ -21,11 +21,11 @@ checkbrew() {
 }
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
     if hash apt 2>/dev/null; then
-        apt-get update
-        apt-get install screen
-        apt-get install make g++
-        apt-get install build-essential libboost-all-dev libssl-dev
-        apt-get install iftop
+        sudo apt-get update
+        sudo apt-get install screen
+        sudo apt-get install make g++
+        sudo apt-get install build-essential libboost-all-dev libssl-dev
+        sudo apt-get install iftop
     fi
     true #checkbrew linuxbrew acting weird in travis-ci
 elif [[ "$OSTYPE" == "darwin"* ]]; then
