@@ -27,6 +27,7 @@ macros:
           - ./scripts/script.sh
           - travis_retry make --debug=v
           - sha256sum dnsseed
+          #- ./dnsseed
       after_script:
           - ./scripts/after_script.sh
       after_success:
@@ -61,6 +62,7 @@ macros:
           - ./scripts/script.sh
           - travis_retry make --debug=v
           - sha256sum dnsseed
+          #- ./dnsseed
       after_script:
           - ./scripts/after_script.sh
       after_success:
