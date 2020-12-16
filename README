@@ -1,4 +1,4 @@
-## bitcoin-seeder [![Build Status](https://travis-ci.org/RandyMcMillan/bitcoin-seeder.svg?branch=master)](https://travis-ci.org/RandyMcMillan/bitcoin-seeder)
+## bitcoin-seeder [![Build Status](https://travis-ci.com/bitcoincore-dev/bitcoin-seeder.svg?branch=master)](https://travis-ci.com/bitcoincore-dev/bitcoin-seeder)
 
 #### bitcoin-seeder is a crawler for the Bitcoin network, which exposes a list of reliable nodes via a built-in DNS server.
 
